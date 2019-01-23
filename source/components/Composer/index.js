@@ -2,19 +2,23 @@
 import React, { Component } from 'react';
 
 //Instruments
-import avatar from 'theme/assets/lisa';
 import Styles from './styles.m.css';
 
 export default class Composer extends Component {
     render () {
+        const {
+            avatar,
+            currenUserFirstName
+        } = this.props;
+
         return (
-                <setion className={ Styles.composer }>
+                <section className={ Styles.composer }>
                     <img src={ avatar } />
                     <form>
-                        <textarea placeholder={ `What's on your mind, Lisa?` }/>
+                        <textarea placeholder={ `What's on your mind, ${currenUserFirstName}?` }/>
                         <input type="submit" value="Post"/>
                     </form>
-                </setion>
+                </section>
         );
     }
 }
