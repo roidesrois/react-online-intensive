@@ -1,6 +1,7 @@
 // Core
 import React, { Component } from 'react';
 import moment from 'moment';
+import {string, number} from 'prop-types';
 
 //Instruments
 import Styles from './styles.m.css';
@@ -9,7 +10,13 @@ import Styles from './styles.m.css';
 import { Consumer } from 'components/HOC/withProfile';
 
 export default class Post extends Component {
+    static propTypes = {
+        comment: string.isRequired,
+        created: number.isRequired,
+    };
     render () {
+        const {comment, created} = this.props;
+
         return (
                 <Consumer>
                     {(context)=>{
@@ -24,8 +31,8 @@ export default class Post extends Component {
                                 <div className="cross"/>
                                 <img src={ avatar } />
                                 <a href="">{`${currenUserFirstName} ${currenUserLastName}`}</a>
-                                <time>{ moment().format('MMMM D h:mm:ss a')}</time>
-                                <p>Howdy!</p>
+                                <time>{ moment.unix(created).format('MMMM D h:mm:ss a')}</time>
+                                <p>{comment}</p>
                             </section>
                         )
                     }}
