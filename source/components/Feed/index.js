@@ -12,6 +12,7 @@ import Styles from './styles.m.css';
 
 export default class Feed extends Component {
     state = {
+        loading: true,
         posts: [
             {id: 1, comment: 'Hi!', created: 1526825076849},
             {id: 2, comment: 'Привет!', created: 1526825076999},
@@ -19,7 +20,8 @@ export default class Feed extends Component {
     };
 
     render () {
-        const { posts } = this.state;
+        const { loading, posts } = this.state;
+
 
         const postsJSX = posts.map((post)=>{
             return <Post key = {post.id} {...post} />
@@ -27,7 +29,7 @@ export default class Feed extends Component {
 
         return (
             <section className = { Styles.feed }>
-                <Spinner isSpinning />
+                <Spinner isSpinning = { loading } />
                 <StatusBar/>
                 <Composer/>
                 { postsJSX }
