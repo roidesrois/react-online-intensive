@@ -12,12 +12,12 @@ export default class StatusBar extends Component {
         return (
             <Consumer>
                 {(context)=>{
-                    const {avatar, currenUserFirstName, currenUserLastName} = context;
+                    const {avatar, currentUserFirstName, currentUserLastName} = context;
                     return (
                         <section className={ Styles.statusBar}>
                             <button>
                                 <img src ={avatar}/>
-                                <span>{currenUserFirstName}&nbsp;{currenUserLastName}</span>
+                                <span>{currentUserFirstName}&nbsp;{currentUserLastName}</span>
                             </button>
                         </section>
                     )
