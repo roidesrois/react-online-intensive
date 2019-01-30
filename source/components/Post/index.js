@@ -11,22 +11,35 @@ import { Consumer } from 'components/HOC/withProfile';
 import Like from 'components/Like';
 
 export default class Post extends Component {
+    constructor(){
+        super();
+
+        this._removePost = this._removePost.bind(this)
+    }
     static propTypes = {
         id:         string.isRequired,
         comment:    string.isRequired,
         created:    number.isRequired,
         likes:      array.isRequired,
         _likePost:  func.isRequired,
+        _removePost:  func.isRequired,
     };
+
+    _removePost() {
+        const { _removePost, id} = this.props;
+
+        _removePost(id);
+    }
+
     render () {
-        const {comment, created, _likePost, id, likes } = this.props;
+        const {comment, created, _likePost, _removePost, id, likes } = this.props;
 
         return (
                 <Consumer>
                     {(context)=>{
                         return (
                             <section className = { Styles.post }>
-                                <span className={Styles.cross}/>
+                                <span onClick = { this._removePost } className={Styles.cross}/>
                                 <div className="cross"/>
                                 <img src={ context.avatar } />
                                 <a href="">{`${context.currentUserFirstName} ${context.currentUserLastName}`}</a>
