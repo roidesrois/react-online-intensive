@@ -7,9 +7,10 @@ import {string, number, func, array} from 'prop-types';
 import Styles from './styles.m.css';
 
 //Consumer
-import { Consumer } from 'components/HOC/withProfile';
+import { withProfile } from 'components/HOC/withProfile';
 import Like from 'components/Like';
 
+@withProfile
 export default class Post extends Component {
     static propTypes = {
         id:         string.isRequired,
@@ -27,24 +28,18 @@ export default class Post extends Component {
     }
 
     render () {
-        const {comment, created, _likePost, _removePost, id, likes } = this.props;
+        const {comment, created, _likePost, _removePost, id, likes, avatar, currentUserFirstName, currentUserLastName } = this.props;
+
 
         return (
-                <Consumer>
-                    {(context)=>{
-                        return (
-                            <section className = { Styles.post }>
-                                <span onClick = { this._removePost } className={Styles.cross}/>
-                                <div className="cross"/>
-                                <img src={ context.avatar } />
-                                <a href="">{`${context.currentUserFirstName} ${context.currentUserLastName}`}</a>
-                                <time>{ moment.unix(created).format('MMMM D h:mm:ss a')}</time>
-                                <p>{comment}</p>
-                                <Like _likePost = { _likePost } id = { id } likes = { likes } />
-                            </section>
-                        )
-                    }}
-                </Consumer>
+            <section className = { Styles.post }>
+                <span onClick = { this._removePost } className={Styles.cross}/>
+                <img src={ avatar } />
+                <a href="">{`${currentUserFirstName} ${currentUserLastName}`}</a>
+                <time>{ moment.unix(created).format('MMMM D h:mm:ss a')}</time>
+                <p>{comment}</p>
+                <Like _likePost = { _likePost } id = { id } likes = { likes } />
+            </section>
         );
     }
 }
