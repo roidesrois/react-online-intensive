@@ -11,11 +11,6 @@ import { Consumer } from 'components/HOC/withProfile';
 import Like from 'components/Like';
 
 export default class Post extends Component {
-    constructor(){
-        super();
-
-        this._removePost = this._removePost.bind(this)
-    }
     static propTypes = {
         id:         string.isRequired,
         comment:    string.isRequired,
@@ -25,7 +20,7 @@ export default class Post extends Component {
         _removePost:  func.isRequired,
     };
 
-    _removePost() {
+    _removePost = () => {
         const { _removePost, id} = this.props;
 
         _removePost(id);
@@ -45,7 +40,7 @@ export default class Post extends Component {
                                 <a href="">{`${context.currentUserFirstName} ${context.currentUserLastName}`}</a>
                                 <time>{ moment.unix(created).format('MMMM D h:mm:ss a')}</time>
                                 <p>{comment}</p>
-                                <Like _likePost = { _likePost } id = { id } likes = { likes } {...context}/>
+                                <Like _likePost = { _likePost } id = { id } likes = { likes } />
                             </section>
                         )
                     }}
