@@ -153,12 +153,10 @@ export default class Feed extends Component {
             }
         });
 
-        const postKey = this.state.posts.findIndex((el) => {
-            return el.id === id;
-        });
 
-        let newPosts = this.state.posts;
-        newPosts.splice(postKey, 1);
+        let newPosts = this.state.posts.filter((el)=>{
+            return el.id !== id;
+        });
 
         this.setState({
             posts: newPosts,
@@ -182,7 +180,7 @@ export default class Feed extends Component {
                     enter: Styles.postInStart,
                     enterActive: Styles.postInEnd,
                     exit: Styles.postOutStart,
-                    exitActive: Styles.postInEnd,
+                    exitActive: Styles.postOutEnd,
                 }}
                 key = { post.id }
                 timeout = { {
