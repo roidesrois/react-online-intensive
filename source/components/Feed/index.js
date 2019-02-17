@@ -1,7 +1,7 @@
 // Core
 import React, {Component} from 'react';
 import { Transition } from 'react-transition-group';
-import {fromTo} from 'gsap';
+import { fromTo, from, to } from 'gsap';
 
 
 //Components
@@ -24,6 +24,7 @@ import { socket } from 'socket/init'
 export default class Feed extends Component {
     state = {
         isPostsFetching: false,
+        notification: true,
         posts: []
     }
 
@@ -170,10 +171,23 @@ export default class Feed extends Component {
         fromTo(composer, 1, {opacity: 0}, {opacity:1})
     };
 
+    _animatePostmanEnter = (composer) => {
+        from(composer, 1, {scale: 0, transformOrigin:'100% 100%', delay: 1, ease:Bounce.easeOut})
+    };
+
+    _animatePostmanEntered = () => {
+        this.setState({
+            notification: false
+        });
+    }
+
+    _animatePostmanExit = (composer) => {
+        to(composer, .5, {y: 50, opacity: 0, ease:Back.easeIn})
+    };
+
 
     render() {
-        const {isPostsFetching, posts} = this.state;
-
+        const {isPostsFetching, posts, notification} = this.state;
 
         const postsJSX = posts.map((post) => {
             return (
@@ -195,7 +209,16 @@ export default class Feed extends Component {
                 >
                     <Composer _createPost={ this._createPost }/>
                 </Transition>
-                <Postman/>
+                <Transition
+                    in = {notification}
+                    appear
+                    timeout = {5000}
+                    onEnter = { this._animatePostmanEnter }
+                    onEntered = { this._animatePostmanEntered }
+                    onExit = { this._animatePostmanExit }
+                >
+                    <Postman/>
+                </Transition>
                 { postsJSX }
             </section>
         );
