@@ -21,6 +21,8 @@ const result = mount(<Composer {...props}/>);
 const _submitCommentSpy = jest.spyOn(result.instance(), '_submitComment');
 const _handleFormSubmitSpy = jest.spyOn(result.instance(), '_handleFormSubmit');
 
+const _preventDefaultMock = jest.fn();
+
 describe('Composer component:', ()=>{
     test('should have 1 "section" element', () => {
         expect(result.find('section')).toHaveLength(1);
@@ -91,4 +93,36 @@ describe('Composer component:', ()=>{
         expect(_submitCommentSpy).toHaveBeenCalledTimes(1);
         expect(_handleFormSubmitSpy).toHaveBeenCalledTimes(1);
     });
+
+    test('should return null while submitted with no comment avalable',()=>{
+        expect(result.state().comment).toBe('');
+        result.find('form').simulate('submit');
+
+        expect(_submitCommentSpy).toReturnWith(null)
+
+    })
+
+    test('should not call _submitOnEnter if textarea element recaived onKeyPress event with no Enter key',()=>{
+        jest.clearAllMocks();
+        result.find('textarea').simulate('keypress', {
+            key: 'L',
+            preventDefault: _preventDefaultMock
+        });
+
+        expect(_preventDefaultMock).toHaveBeenCalledTimes(0)
+        expect(_submitCommentSpy).toHaveBeenCalledTimes(0)
+
+    })
+
+    test('should not call _submitOnEnter if textarea element recaived onKeyPress event with no Enter key',()=>{
+        jest.clearAllMocks();
+        result.find('textarea').simulate('keypress', {
+            key: 'Enter',
+            preventDefault: _preventDefaultMock
+        });
+
+        expect(_preventDefaultMock).toHaveBeenCalledTimes(1)
+        expect(_submitCommentSpy).toHaveBeenCalledTimes(1)
+
+    })
 });
