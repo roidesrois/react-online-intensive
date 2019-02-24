@@ -41,6 +41,11 @@ export default class StatusBar extends Component {
         fromTo(composer, 1, {opacity: 0}, {opacity:1})
     };
 
+    _handleLogout = (e) => {
+        window.localStorage.setItem('react_login', false);
+        this.props._handlerLogin( false );
+    };
+
     render () {
         const {avatar, currentUserFirstName, currentUserLastName} = this.props;
         const {online} = this.state;
@@ -69,6 +74,9 @@ export default class StatusBar extends Component {
                         <span>{currentUserFirstName}&nbsp;{currentUserLastName}</span>
                     </Link>
                     <Link to="/feed">Feed</Link>
+                    <div onClick={this._handleLogout} className = { Styles.logout }>
+                        <div>LogOut</div>
+                    </div>
                 </section>
             </Transition>
         )

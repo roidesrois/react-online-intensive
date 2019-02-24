@@ -9,6 +9,21 @@
     border-bottom: #29487d;
     background-color: #4267b2;
 
+    & .logout {
+          position: absolute;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 5px;
+          min-width: max-content;
+          height: 24px;
+          right: 5px;
+          color: #fff;
+          font-size: 14px;
+          user-select: none;
+          cursor: pointer;
+    }
+
     & a {
         display: flex;
         align-items: center;
